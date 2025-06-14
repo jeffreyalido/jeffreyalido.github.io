@@ -13,9 +13,76 @@
     <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     
+    <style>
+      /* Dark mode styles */
+      body.dark-mode {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+      }
+      
+      body.dark-mode a {
+        color: #64b5f6;
+      }
+      
+      body.dark-mode a:hover {
+        color: #90caf9;
+      }
+      
+      body.dark-mode .papertitle {
+        color: #e0e0e0;
+      }
+      
+      body.dark-mode .highlight-light {
+        background-color: #3d3d00;
+      }
+      
+      body.dark-mode .highlight-dark {
+        background-color: #2d2d2d;
+      }
+      
+      /* Light mode highlight class */
+      .highlight-paper {
+        background-color: #ffffd0;
+      }
+      
+      /* Dark mode highlight class */
+      body.dark-mode .highlight-paper {
+        background-color: #3d3d00;
+      }
+      
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #333;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-size: 14px;
+        z-index: 1000;
+        transition: background-color 0.3s;
+      }
+      
+      .theme-toggle:hover {
+        background: #555;
+      }
+      
+      body.dark-mode .theme-toggle {
+        background: #666;
+        color: #e0e0e0;
+      }
+      
+      body.dark-mode .theme-toggle:hover {
+        background: #888;
+      }
+    </style>
+    
   </head>
 
   <body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
     <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
       <tr style="padding:0px">
         <td style="padding:0px">
@@ -49,7 +116,7 @@
           </tbody></table>
           <table style="width:100%;border:0px;border-spacing:0px 10px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 
-    <tr onmouseout="wsdiff_stop()" onmouseover="wsdiff_start()" bgcolor="#ffffd0">
+    <tr onmouseout="wsdiff_stop()" onmouseover="wsdiff_start()" class="highlight-paper">
       <td style="padding:16px;width:20%;vertical-align:middle;text-align:center;">
         <div class="one" style="margin-top: 1px;">
           <div class="two" id='wsdiff_image'>
@@ -116,7 +183,7 @@
       </td>
     </tr>
 
-    <tr>
+    <tr class="highlight-paper">
       <td style="padding:16px;width:20%;vertical-align:middle">
         <img src='images/sbrnet.png' width="160">
       </td>
@@ -307,5 +374,36 @@
         </td>
       </tr>
     </table>
+    
+    <script>
+      // Theme toggle functionality
+      function toggleTheme() {
+        const body = document.body;
+        const themeToggle = document.querySelector('.theme-toggle');
+        
+        if (body.classList.contains('dark-mode')) {
+          body.classList.remove('dark-mode');
+          themeToggle.textContent = '🌙';
+          localStorage.setItem('theme', 'light');
+        } else {
+          body.classList.add('dark-mode');
+          themeToggle.textContent = '☀️';
+          localStorage.setItem('theme', 'dark');
+        }
+      }
+      
+      // Load theme preference on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const themeToggle = document.querySelector('.theme-toggle');
+        
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          themeToggle.textContent = '☀️';
+        } else {
+          themeToggle.textContent = '🌙';
+        }
+      });
+    </script>
   </body>
 </html>
